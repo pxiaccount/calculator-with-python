@@ -1,8 +1,8 @@
 # calculator-with-python
 
-A calculator in Python create using tkinter
+A calculator created with Python.
 
-## Function
+## Functions
 Calculator contains function keybinding:
 - Addition (+) , Subtraction (-), Mutiplication (*), Division (/), Modulus (%)
 - Square root (√)
