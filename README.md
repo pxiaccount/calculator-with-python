@@ -10,8 +10,8 @@ Calculator contains function keybinding:
 - Parentheses
 - Pi (π)
 
-## GUI
-![2025-01-22_14-47](https://github.com/user-attachments/assets/5a9d8978-0bfd-403f-b924-d4af3cf8cec6)
+## Showcase
+![image](/screenshots/2025-01-22_19-56.png)
 
 ## How to run/start?
 
