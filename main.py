@@ -50,8 +50,11 @@ def delete():
 def evaluation():
     current = display_text.get()
     
-    result = eval(current)
+    result = float(eval(current))
+    
     # print(result)
+    if isinstance(result, float) and result.is_integer():
+        result = int(result)
     display_text.set(result)
 
 def clear():
@@ -60,10 +63,13 @@ def clear():
     dot = True
 
 def add_root():
+    global dot
+    dot = False
     current = display_text.get()
     
     result = math.sqrt(float(current))
     # print(result)
+    
     display_text.set(result)
 
 def add_dot():
@@ -75,6 +81,22 @@ def add_dot():
         dot = False
     else:
         display_text.set(current)
+
+def bind(x):
+    key = x.char
+    if key.isdigit():
+        update(key)
+    elif key in operator_text:
+        operation(key)
+    elif key == "C" or key == "c":
+        clear()
+    elif key == "=" or x.keysym == "KP_Enter" or x.keysym == "Return":
+        evaluation()
+    elif key == ".":
+        add_dot()
+
+root.bind("<BackSpace>", lambda event: delete())
+root.bind("<Key>", bind)
 
 for (text, row, column) in buttons:
     if text in operator_text:
