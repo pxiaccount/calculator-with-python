@@ -5,7 +5,10 @@ A calculator created with Python.
 ## Functions
 Calculator contains function keybinding:
 - Addition (+) , Subtraction (-), Mutiplication (*), Division (/), Modulus (%)
-- Square root (√)
+- Square root (√²)
+- Cube root (√³)
+- Parentheses
+- Pi (π)
 
 ## GUI
 ![2025-01-22_14-47](https://github.com/user-attachments/assets/5a9d8978-0bfd-403f-b924-d4af3cf8cec6)
