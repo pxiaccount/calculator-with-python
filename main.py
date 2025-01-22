@@ -13,6 +13,7 @@ display_ui = Label(display_frame, textvariable=display_text, height=2, width=10,
 display_ui.pack(fill="x")
 
 operator_text = "+-*/%"
+dot = True
 
 buttons = [
     ("C", 1, 0), ("←", 1, 1), ("√x²", 1, 2), ("+", 1, 3),
@@ -31,6 +32,8 @@ def update(x):
         display_text.set(current+x)
 
 def operation(x):
+    global dot
+    dot = True
     current = display_text.get()
     
     if current[-1] != x and current[-1] not in operator_text:
@@ -39,7 +42,10 @@ def operation(x):
 def delete():
     current = display_text.get()
     
-    display_text.set(current[:-1])
+    if current == "0":
+        return 0
+    else:
+        display_text.set(current[:-1])
 
 def evaluation():
     current = display_text.get()
@@ -49,7 +55,9 @@ def evaluation():
     display_text.set(result)
 
 def clear():
+    global dot
     display_text.set("0")
+    dot = True
 
 def add_root():
     current = display_text.get()
@@ -57,6 +65,16 @@ def add_root():
     result = math.sqrt(float(current))
     # print(result)
     display_text.set(result)
+
+def add_dot():
+    global dot
+    current = display_text.get()
+    
+    if current[-1:] not in "." and dot:
+        display_text.set(current + ".")
+        dot = False
+    else:
+        display_text.set(current)
 
 for (text, row, column) in buttons:
     if text in operator_text:
@@ -69,6 +87,8 @@ for (text, row, column) in buttons:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
     elif text == "√x²":
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
+    elif text == ".":
+        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
     else:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
 
