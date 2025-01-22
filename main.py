@@ -4,8 +4,9 @@ import math
 root = Tk()
 root.title("Calculator")
 display_frame = Frame(root)
-display_frame.grid(column=0, row=0, columnspan=4, sticky="we")
-root.geometry("292x465")
+display_frame.grid(column=0, row=0, columnspan=5, sticky="we")
+# root.geometry("292x465")
+
 
 display_text = StringVar()
 display_text.set("0")
@@ -19,11 +20,11 @@ dot = True
 root.resizable(False, False)
 
 buttons = [
-    ("C", 1, 0), ("←", 1, 1), ("√x²", 1, 2), ("+", 1, 3),
-    ("7", 2, 0), ("8", 2, 1), ("9", 2, 2), ("-", 2, 3),
-    ("4", 3, 0), ("5", 3, 1), ("6", 3, 2), ("*", 3, 3),
-    ("1", 4, 0), ("2", 4, 1), ("3", 4, 2), ("/", 4, 3),
-    ("0", 5, 0), (".", 5, 1), ("%", 5, 2), ("=", 5, 3),
+    ("C", 1, 0), ("←", 1, 1), ("x²", 1, 2), ("+", 1, 3), ("π", 1, 4),
+    ("7", 2, 0), ("8", 2, 1), ("9", 2, 2), ("-", 2, 3), ("√x²", 2, 4),
+    ("4", 3, 0), ("5", 3, 1), ("6", 3, 2), ("*", 3, 3), ("√x³", 3, 4),
+    ("1", 4, 0), ("2", 4, 1), ("3", 4, 2), ("/", 4, 3), ("%", 4, 4),
+    ("0", 5, 0), ("(", 5, 1), (")", 5, 2), (".", 5, 3), ("=", 5, 4),
 ]
 
 def update(x):
@@ -65,6 +66,8 @@ def evaluation():
         result = float(eval(current))
     except ZeroDivisionError:
         result = "Error Divided By Zero"
+    except ValueError:
+        result = "Error"
     
     # print(result)
     
@@ -82,7 +85,23 @@ def add_root():
     dot = False
     current = display_text.get()
     
-    result = math.sqrt(float(current))
+    try:
+        result = math.sqrt(float(current))
+    except ValueError:
+        result = current
+    # print(result)
+    
+    display_text.set(result)
+
+def add_3_root():
+    global dot
+    dot = False
+    current = display_text.get()
+    
+    try:
+        result = math.cbrt(float(current))
+    except ValueError:
+        result = current
     # print(result)
     
     display_text.set(result)
@@ -109,6 +128,25 @@ def bind(x):
         evaluation()
     elif key == ".":
         add_dot()
+    elif key == "(":
+        update("(")
+    elif key == ")":
+        update(")")
+
+def square():
+    current = display_text.get()
+
+    display_text.set(float(current)**2)
+
+def add_pi():
+    current = display_text.get()
+
+    if current == "0":
+        display_text.set(str(math.pi))
+    elif current[-1:] in "01234567989.":
+        display_text.set(current+"*"+str(math.pi))
+    else:
+        display_text.set(current+str(math.pi))
 
 root.bind("<BackSpace>", lambda event: delete())
 root.bind("<Key>", bind)
@@ -123,11 +161,15 @@ for (text, row, column) in buttons:
     elif text == "C":
         Button(root, bg="#ffabab", text=text, width=9, height=5, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
     elif text == "√x²":
-        Button(root, bg="#ffdcab", text=text, width=9, height=5, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
+        Button(root, bg="#f799f6", text=text, width=9, height=5, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
+    elif text == "x²":
+        Button(root, bg="#ffdcab", text=text, width=9, height=5, command= lambda t=text: (print(t), square())).grid(row=row, column=column)
+    elif text == "√x³":
+        Button(root, bg="#f799f6", text=text, width=9, height=5, command= lambda t=text: (print(t), add_3_root())).grid(row=row, column=column)
     elif text == ".":
         Button(root, bg="#abe0ff", text=text, width=9, height=5, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
-    elif text == "0":
-        Button(root, bg="#abe0ff", text=text, width=9, height=5, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
+    elif text == "π":
+        Button(root, bg="#f799f6", text=text, width=9, height=5, command= lambda t=text: (print(t), add_pi())).grid(row=row, column=column)
     else:
         Button(root, bg="#abffac", text=text, width=9, height=5, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
 
