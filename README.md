@@ -8,6 +8,6 @@ Calculator contains function keybinding:
 - Square root (√)
 
 ## GUI
-![2025-01-22_13-04](https://github.com/user-attachments/assets/a344eb56-8da9-4f62-8fbd-5b65f2150c37)
+![2025-01-22_14-47](https://github.com/user-attachments/assets/5a9d8978-0bfd-403f-b924-d4af3cf8cec6)
 
 Last update: 22 January 2025
