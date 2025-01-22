@@ -15,7 +15,7 @@ display_ui.pack(fill="x")
 operator_text = "+-*/%"
 
 buttons = [
-    ("C", 1, 0), ("←", 1, 1), ("√x", 1, 2), ("+", 1, 3),
+    ("C", 1, 0), ("←", 1, 1), ("√x²", 1, 2), ("+", 1, 3),
     ("7", 2, 0), ("8", 2, 1), ("9", 2, 2), ("-", 2, 3),
     ("4", 3, 0), ("5", 3, 1), ("6", 3, 2), ("*", 3, 3),
     ("1", 4, 0), ("2", 4, 1), ("3", 4, 2), ("/", 4, 3),
@@ -51,6 +51,13 @@ def evaluation():
 def clear():
     display_text.set("0")
 
+def add_root():
+    current = display_text.get()
+    
+    result = math.sqrt(float(current))
+    # print(result)
+    display_text.set(result)
+
 for (text, row, column) in buttons:
     if text in operator_text:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), operation(t))).grid(row=row, column=column)
@@ -60,6 +67,8 @@ for (text, row, column) in buttons:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), evaluation())).grid(row=row, column=column)
     elif text == "C":
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
+    elif text == "√x²":
+        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
     else:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
 
