@@ -36,9 +36,30 @@ def operation(x):
     if current[-1] != x and current[-1] not in operator_text:
         display_text.set(current+x)
 
+def delete():
+    current = display_text.get()
+    
+    display_text.set(current[:-1])
+
+def evaluation():
+    current = display_text.get()
+    
+    result = eval(current)
+    # print(result)
+    display_text.set(result)
+
+def clear():
+    display_text.set("0")
+
 for (text, row, column) in buttons:
     if text in operator_text:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), operation(t))).grid(row=row, column=column)
+    elif text == "←":
+        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), delete())).grid(row=row, column=column)
+    elif text == "=":
+        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), evaluation())).grid(row=row, column=column)
+    elif text == "C":
+        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
     else:
         Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
 
