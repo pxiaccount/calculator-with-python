@@ -5,15 +5,18 @@ root = Tk()
 root.title("Calculator")
 display_frame = Frame(root)
 display_frame.grid(column=0, row=0, columnspan=4, sticky="we")
+root.geometry("292x465")
 
 display_text = StringVar()
 display_text.set("0")
 
-display_ui = Label(display_frame, textvariable=display_text, height=2, width=10, relief="sunken", anchor="e")
+display_ui = Label(display_frame, textvariable=display_text, height=2, width=10, relief="sunken", anchor="e", bg="#d8f0d8")
 display_ui.pack(fill="x")
 
 operator_text = "+-*/%"
 dot = True
+
+root.resizable(False, False)
 
 buttons = [
     ("C", 1, 0), ("←", 1, 1), ("√x²", 1, 2), ("+", 1, 3),
@@ -28,6 +31,8 @@ def update(x):
     
     if current == "0":
         display_text.set(x)
+    elif current == "Error Divided By Zero":
+        display_text.set("0")
     else:
         display_text.set(current+x)
 
@@ -37,7 +42,10 @@ def operation(x):
     current = display_text.get()
     
     if current[-1] != x and current[-1] not in operator_text:
-        display_text.set(current+x)
+        if current == "Error Divided By Zero":
+            display_text.set("0")
+        else:
+            display_text.set(current+x)
 
 def delete():
     current = display_text.get()
@@ -45,14 +53,21 @@ def delete():
     if current == "0":
         return 0
     else:
-        display_text.set(current[:-1])
+        if current == "Error Divided By Zero":
+            display_text.set("0")
+        else:
+            display_text.set(current[:-1])
 
 def evaluation():
     current = display_text.get()
     
-    result = float(eval(current))
+    try:
+        result = float(eval(current))
+    except ZeroDivisionError:
+        result = "Error Divided By Zero"
     
     # print(result)
+    
     if isinstance(result, float) and result.is_integer():
         result = int(result)
     display_text.set(result)
@@ -100,19 +115,21 @@ root.bind("<Key>", bind)
 
 for (text, row, column) in buttons:
     if text in operator_text:
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), operation(t))).grid(row=row, column=column)
+        Button(root, bg="#abe0ff", text=text, width=9, height=5, command= lambda t=text: (print(t), operation(t))).grid(row=row, column=column)
     elif text == "←":
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), delete())).grid(row=row, column=column)
+        Button(root, bg="#ffdcab", text=text, width=9, height=5, command= lambda t=text: (print(t), delete())).grid(row=row, column=column)
     elif text == "=":
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), evaluation())).grid(row=row, column=column)
+        Button(root, bg="#b6abff", text=text, width=9, height=5, command= lambda t=text: (print(t), evaluation())).grid(row=row, column=column)
     elif text == "C":
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
+        Button(root, bg="#ffabab", text=text, width=9, height=5, command= lambda t=text: (print(t), clear())).grid(row=row, column=column)
     elif text == "√x²":
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
+        Button(root, bg="#ffdcab", text=text, width=9, height=5, command= lambda t=text: (print(t), add_root())).grid(row=row, column=column)
     elif text == ".":
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
+        Button(root, bg="#abe0ff", text=text, width=9, height=5, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
+    elif text == "0":
+        Button(root, bg="#abe0ff", text=text, width=9, height=5, command= lambda t=text: (print(t), add_dot())).grid(row=row, column=column)
     else:
-        Button(root, text=text, width=3, height=2, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
+        Button(root, bg="#abffac", text=text, width=9, height=5, command= lambda t=text: (print(t), update(t))).grid(row=row, column=column)
 
 
 root.mainloop()
