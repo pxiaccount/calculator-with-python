@@ -11,7 +11,7 @@ Calculator contains function keybinding:
 - Pi (π)
 
 ## Showcase
-![image](/screenshots/2025-01-22_19-56.png)
+![image](/screenshots/2025-01-23_18-46.png)
 
 ## How to run/start?
 
