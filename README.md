@@ -1,4 +1,4 @@
-# calculator-with-python
+# pxicalculator
 
 A calculator created with Python.
 
