@@ -3,12 +3,15 @@
 A calculator created with Python.
 
 ## Functions
-Calculator contains function keybinding:
+Calculator contains function:
 - Addition (+) , Subtraction (-), Mutiplication (*), Division (/), Modulus (%)
 - Square root (√²)
 - Cube root (√³)
 - Parentheses
 - Pi (π)
+- sin, cos, tan
+- e value
+- History
 
 ## Showcase
 ![image](/screenshots/2025-01-23_18-46.png)
