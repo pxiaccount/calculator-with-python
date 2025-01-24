@@ -7,7 +7,6 @@ display_frame = Frame(root)
 display_frame.grid(column=0, row=0, columnspan=5, sticky="we")
 # root.geometry("292x465")
 
-
 display_text = StringVar()
 display_text.set("0")
 
